@@ -17,14 +17,6 @@ namespace Dojo5_FinalProject.Html
             AskToOpenHtml();
         }
 
-        public static void Generate(string original, string translated)
-        {
-            string body = WrapSection("Texte corrigé", original) + WrapSection("Traduction", translated);
-            string html = GenerateHtml("Texte corrigé et traduit", body);
-            WriteFiles(html);
-            AskToOpenHtml();
-        }
-
         private static string GenerateHtml(string title, string bodyContent)
         {
             return $@"
@@ -56,9 +48,9 @@ namespace Dojo5_FinalProject.Html
 
         private static void WriteFiles(string html)
         {
-            Directory.CreateDirectory(OutputDir);
-            File.WriteAllText(HtmlPath, html);
-            File.WriteAllText(CssPath, GetCss()); // crée ou écrase le CSS
+            Directory.CreateDirectory(OutputDir);// création du dossier html/CSS
+            File.WriteAllText(HtmlPath, html);// crée ou écrase le fichier html
+            File.WriteAllText(CssPath, GetCss()); // crée ou écrase le fichier CSS
             Console.WriteLine($"Fichier HTML généré : {HtmlPath}");
         }
 
@@ -66,7 +58,7 @@ namespace Dojo5_FinalProject.Html
         {
             Console.Write("Souhaitez-vous ouvrir le fichier HTML ? (o/n) : ");
             string? input = Console.ReadLine()?.ToLower();
-            if (input == "o" || input == "oui" || input == "y")
+            if (input == "o" || input == "oui")
             {
                 try
                 {
