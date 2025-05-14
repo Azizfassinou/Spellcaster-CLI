@@ -22,7 +22,7 @@ namespace Dojo5_FinalProject.Services
                 .AddEnvironmentVariables()
                 .Build();
 
-            apiKey = config["OPENAI_API_KEY"];
+            apiKey = config["Mr je dois avoir ma clé ce soir pour faire les textes; Merci d'avance !!!"];
             endpoint = "https://api.openai.com/v1/chat/completions";
 
             if (string.IsNullOrEmpty(apiKey))
@@ -31,14 +31,14 @@ namespace Dojo5_FinalProject.Services
             }
         }
 
-        // Corrige un texte en français
+        // Corrige le texte en français
         public async Task<string> CorrectTextAsync(string input)
         {
             string prompt = $"Corrige les fautes en français dans :\n\"{input}\"";
             return await SendRequestAsync(prompt);
         }
 
-        // Traduit un texte selon la locale UK ou US
+        // Traduit le texte selon la locale(langue) UK ou US
         public async Task<string> TranslateTextAsync(string input, string locale)
         {
             string prompt = locale switch
@@ -51,7 +51,8 @@ namespace Dojo5_FinalProject.Services
             return await SendRequestAsync(prompt);
         }
 
-        // Méthode principale : envoie une requête OpenAI
+        // Méthode principale : Permet l'envoie d'une requête OpenAI
+
         private async Task<string> SendRequestAsync(string prompt)
         {
             var requestBody = new
@@ -64,4 +65,29 @@ namespace Dojo5_FinalProject.Services
             };
 
             var json = JsonSerializer.Serialize(requestBody);
-            var content = new StringContent(json, Encoding.UTF8, "application/json
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            httpUser.DefaultRequestHeaders.Clear();
+            httpUser.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+
+            var response = await httpUser.PostAsync(endpoint, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Erreur API : {response.StatusCode}");
+                return "[Erreur API]";
+            }
+
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            using JsonDocument doc = JsonDocument.Parse(responseString);
+            var result = doc.RootElement
+                            .GetProperty("choices")[0]
+                            .GetProperty("message")
+                            .GetProperty("content")
+                            .GetString();
+
+            return result?.Trim() ?? "";
+        }
+    }
+}
