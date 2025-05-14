@@ -17,10 +17,8 @@ Technologies utilisées
 
 
 Comment lancer l’application
-
-1. Cloner ce dépôt :
-
 ```bash
+1. Cloner ce dépôt :
 git clone https://github.com/tonpseudo/spellcaster-cli.git
 cd spellcaster-cli
 
@@ -32,4 +30,5 @@ Créer un fichier appsettings.json :
 }
 
 3. Assurez-vous d'avoir dotnet installé sur votre machine et lancer le programme avec la commande : dotnet run
+```
 Puis vivez votre expérience utilisateur.
