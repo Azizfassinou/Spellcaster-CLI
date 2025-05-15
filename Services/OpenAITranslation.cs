@@ -22,7 +22,7 @@ namespace Dojo5_FinalProject.Services
                 .AddEnvironmentVariables()
                 .Build();
 
-            apiKey = " WHERE IS YOUR API-KEY MY DEAR ?";
+            apiKey = "";
             endpoint = "https://api.openai.com/v1/chat/completions";
 
             if (string.IsNullOrEmpty(apiKey))
@@ -61,7 +61,7 @@ namespace Dojo5_FinalProject.Services
                 $"(<!DOCTYPE html>\r\n<html lang='fr'>\r\n<head>\r\n    <meta charset='UTF-8'>\r\n    <title>{{topic}}</title>\r\n    <link rel='stylesheet' href='style.css'>\r\n</head>\r\n<body>\r\n    <div class='container'>\r\n" +
                 $"        <h1>{{topic}}</h1>\r\n        <article>\r\n            {{content.Replace(\"\\n\", \"<br><br>\")}}\r\n        </article>\r\n    </div>\r\n</body>\r\n</html>\";), plus précisement au niveau du content de {{content.Replace(\"\\n\", \"<br><br>\")}}, " +
                 $"Faudrait surtout que la page puisse bien affichée un site claire avec une bonne mise en forme. Evite de mettre des apostrophes et ou le mot html au début et à la fin du contenu.";
-            Console.Write("\n\n     Vueillez patientez pendant que la magie s'opère!!! \n \n       Vous pouvez prendre un café en attendant ...");
+            Console.Write("\n\n     Vueillez patienter pendant que la magie s'opère!!! \n \n       Vous pouvez prendre un café en attendant ...");
 
             return await SendRequestAsync(prompt);
         }
@@ -74,7 +74,7 @@ namespace Dojo5_FinalProject.Services
         {
             var requestBody = new
             {
-                model = "WHICH MODAL ?",
+                model = "gpt-4o-mini",
                 messages = new[]
                 {
                     new { role = "user", content = prompt }
