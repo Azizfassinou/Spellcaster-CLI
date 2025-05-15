@@ -22,7 +22,7 @@ namespace Dojo5_FinalProject.Services
                 .AddEnvironmentVariables()
                 .Build();
 
-            apiKey = config["Mr je dois avoir ma clé ce soir pour faire les textes; Merci d'avance !!!"];
+            apiKey = " WHERE IS YOUR API-KEY MY DEAR ?";
             endpoint = "https://api.openai.com/v1/chat/completions";
 
             if (string.IsNullOrEmpty(apiKey))
@@ -51,20 +51,38 @@ namespace Dojo5_FinalProject.Services
             return await SendRequestAsync(prompt);
         }
 
+        // Génère du contenu HTML
+        public async Task<string> GenerateWebContentAsync(string topic)
+        {
+            string prompt = $"Tu es un rédacteur web professionnel. " +
+                $"Rédige un contenu structuré et informatif pour une page web sur le thème suivant : \"{topic}\". " +
+                $"Le contenu doit avoir un titre, une introduction, 2 ou 3 sections avec titres puis une conclusion. " +
+                $"T'as pas besoin d'écrire introduction ni conclusion sur la page à afficher. Propose également une mise en forme intégrée directement dans le contenu afin que si le contenu se place dans ce code HTML " +
+                $"(<!DOCTYPE html>\r\n<html lang='fr'>\r\n<head>\r\n    <meta charset='UTF-8'>\r\n    <title>{{topic}}</title>\r\n    <link rel='stylesheet' href='style.css'>\r\n</head>\r\n<body>\r\n    <div class='container'>\r\n" +
+                $"        <h1>{{topic}}</h1>\r\n        <article>\r\n            {{content.Replace(\"\\n\", \"<br><br>\")}}\r\n        </article>\r\n    </div>\r\n</body>\r\n</html>\";), plus précisement au niveau du content de {{content.Replace(\"\\n\", \"<br><br>\")}}, " +
+                $"Faudrait surtout que la page puisse bien affichée un site claire avec une bonne mise en forme. Evite de mettre des apostrophes et ou le mot html au début et à la fin du contenu.";
+            Console.Write("\n\n     Vueillez patientez pendant que la magie s'opère!!! \n \n       Vous pouvez prendre un café en attendant ...");
+
+            return await SendRequestAsync(prompt);
+        }
+
+
+
         // Méthode principale : Permet l'envoie d'une requête OpenAI
 
         private async Task<string> SendRequestAsync(string prompt)
         {
             var requestBody = new
             {
-                model = "gpt-3.5-turbo",
+                model = "WHICH MODAL ?",
                 messages = new[]
                 {
                     new { role = "user", content = prompt }
                 }
             };
 
-            var json = JsonSerializer.Serialize(requestBody);
+
+        var json = JsonSerializer.Serialize(requestBody);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             httpUser.DefaultRequestHeaders.Clear();
